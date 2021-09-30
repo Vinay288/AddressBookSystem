@@ -51,4 +51,10 @@ public class AddressBookFileIOTest {
         boolean result = addressBookService.writeService(addressBook.getName(), IOService.JSON_IO, "vinn");
         Assertions.assertTrue(result);
     }
+    @Test
+    public void whenGivenFileName_whenCorrect_ReadJSONFile() {
+        AddressBookService addressBookService = new AddressBookService();
+        boolean result = addressBookService.readService("vinn", IOService.JSON_IO);
+        Assertions.assertTrue(result);
+    }
 }
