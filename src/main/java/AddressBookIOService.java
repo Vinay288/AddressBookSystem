@@ -1,6 +1,8 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddressBookIOService {
     private static AddressBookIOService addressBookIOService;
@@ -24,7 +26,14 @@ public class AddressBookIOService {
         try {
             Files.write(Paths.get(fileName.concat(".txt")), contactBuffer.toString().getBytes());
         } catch (FileIOException | IOException e) {
-            e.printStackTrace();
+            throw new FileIOException(e.getMessage());
+        }
+    }
+    public void readFromFile(String fileName){
+        try {
+            Files.lines(Paths.get(fileName.concat(".txt"))).forEach(System.out::println);
+        } catch (IOException e) {
+            throw new FileIOException(e.getMessage());
         }
     }
 }
