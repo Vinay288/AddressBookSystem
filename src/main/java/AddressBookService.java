@@ -1,16 +1,17 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class AddressBookService {
     HashSet<String> addressBookName;
     List<AddressBook> addressBooks;
+    HashMap<String, List<Contact>> cityContactsList;
+    HashMap<String, List<Contact>> stateContactsList;
     Contact contact;
 
     AddressBookService() {
         addressBookName = new HashSet<>();
         addressBooks = new ArrayList<>();
+        cityContactsList = new HashMap<>();
+        stateContactsList = new HashMap<>();
     }
 
     public Contact getContact() {
@@ -31,6 +32,17 @@ public class AddressBookService {
     }
 
     public void addContactToAddressBook(AddressBook addressBook, Contact contact) {
+        if (cityContactsList.containsKey(contact.getPlace().getCity()))
+            cityContactsList.get(contact.getPlace().getCity()).add(contact);
+        else
+            cityContactsList.put(contact.getPlace().getCity(), List.of(contact));
+
+        if (stateContactsList.containsKey(contact.getPlace().getState()))
+            stateContactsList.get(contact.getPlace().getState()).add(contact);
+
+        else
+            stateContactsList.put(contact.getPlace().getCity(), List.of(contact));
+
         addressBook.addContact(contact);
     }
 
@@ -89,7 +101,7 @@ public class AddressBookService {
 
     public List<Contact> searchContact(String cityName, String stateName) {
         List<Contact> contactList = new ArrayList<>();
-        addressBooks.forEach(addressBook -> addressBook.getContactsList().stream().filter(contact -> (contact.getPlace().getCity().equals(cityName)||contact.getPlace().getCity().equals(stateName))).forEach(contactList::add));
+        addressBooks.forEach(addressBook -> addressBook.getContactsList().stream().filter(contact -> (contact.getPlace().getCity().equals(cityName) || contact.getPlace().getCity().equals(stateName))).forEach(contactList::add));
         return contactList;
     }
 }
