@@ -86,4 +86,10 @@ public class AddressBookService {
         addressBooks.add(addressBook);
         return true;
     }
+
+    public List<Contact> searchContact(String cityName, String stateName) {
+        List<Contact> contactList = new ArrayList<>();
+        addressBooks.forEach(addressBook -> addressBook.getContactsList().stream().filter(contact -> (contact.getPlace().getCity().equals(cityName)||contact.getPlace().getCity().equals(stateName))).forEach(contactList::add));
+        return contactList;
+    }
 }
