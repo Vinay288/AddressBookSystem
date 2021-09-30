@@ -2,6 +2,8 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class AddressBookDBTest {
@@ -22,4 +24,14 @@ public class AddressBookDBTest {
         boolean result = addressBookService.compareContactSync("address_book1");
         Assertions.assertTrue(result);
     }
+    @Test
+    public void givenDateRange_WhenCorrect_RetrieveAllContactsAdded() {
+        AddressBookService addressBookService = new AddressBookService();
+        LocalDate startDate = LocalDate.of(2020, 4, 19);
+        LocalDate endDate = LocalDate.of(2020, 6, 19);
+        List<Contact> contacts = addressBookService.readConatctsAddedInRange(Date.valueOf(startDate),
+                Date.valueOf(endDate));
+        Assert.assertEquals(0, contacts.size());
+    }
+
 }
