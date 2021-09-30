@@ -1,3 +1,4 @@
+import com.google.gson.Gson;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 
@@ -83,5 +84,17 @@ public class AddressBookIOService {
         } catch (Exception e) {
             throw new FileIOException(e.getMessage());
         }
+    }
+    public void writeToJsonFile(AddressBook addressBook,String fileName){
+        try {
+            Gson gson = new Gson();
+            String json = gson.toJson(addressBook);
+            FileWriter writer = new FileWriter(fileName.concat(".json"));
+            writer.write(json);
+            writer.close();
+        } catch (Exception e) {
+            throw new FileIOException(e.getMessage());
+        }
+
     }
 }
