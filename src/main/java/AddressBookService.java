@@ -192,5 +192,8 @@ public class AddressBookService {
     public List<Contact> readConatctsAddedInRange(Date startDate, Date endDate) {
         return AddressBookDbService.getIoInstance().readConatctsAddedInRange(startDate, endDate);
     }
+    public List<Contact> readConatctsAddedInGivenCityOrState(String city, String state) {
+        return AddressBookDbService.getIoInstance().readContactsInGivenCityOrState(city, state);
+    }
 }
 
