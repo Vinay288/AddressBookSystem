@@ -6,7 +6,7 @@ public class AddressBookService {
     List<AddressBook> addressBooks;
     HashMap<String, List<Contact>> cityContactsList;
     HashMap<String, List<Contact>> stateContactsList;
-    Contact contact;
+    Contact contact,updateContact;
 
     AddressBookService() {
         addressBookName = new HashSet<>();
@@ -159,6 +159,8 @@ public class AddressBookService {
                         return true;
             case JSON_IO:AddressBookIOService.getIoInstance().writeToJsonFile(getAddressBook(addressBookName),fileName);
                         return true;
+            case DB_IO: updateContact=AddressBookDbService.getIoInstance().writeAddressBookDB(this.getContact(), addressBookName);
+                        return true;
             default:break;
         }
         return false;
@@ -178,5 +180,14 @@ public class AddressBookService {
         }
         return false;
     }
+
+    public boolean compareContactSync(String addressBokkName) {
+        readService(addressBokkName,IOService.DB_IO);
+        for (Contact contact : contactsListFromDB) {
+            if (contact.toString().equals(updateContact.toString()))
+                return true;
+        }
+        return false;
     }
+}
 
