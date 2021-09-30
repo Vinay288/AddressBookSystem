@@ -40,4 +40,14 @@ public class AddressBookServiceTest {
         addressBookService.deleteContact(addressBook,"vinay");
         Assertions.assertFalse(addressBook.getContactsList().contains(contact));
     }
+    @Test
+    public void givenAddressBook_AddMultipleContacts(){
+        AddressBookService addressBookService=new AddressBookService();
+        Contact contact1=new Contact((int)(Math.random() * 100), "vinay", "hiremath", "street 2", 9874512420L, "vvj@gmail.com", "badami", "karnataka", 587201);
+        Contact contact2=new Contact((int)(Math.random() * 100), "vishal", "hiremath", "street 2", 9874512420L, "vvj@gmail.com", "badami", "karnataka", 587201);
+        AddressBook addressBook=new AddressBook((int) (Math.random()*100),"AddressBook1");
+        addressBookService.addContactToAddressBook(addressBook,contact1);
+        addressBookService.addContactToAddressBook(addressBook,contact2);
+        Assertions.assertEquals(2,addressBook.getContactsList().size());
+    }
 }
