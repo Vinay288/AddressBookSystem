@@ -12,6 +12,12 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    implementation('com.opencsv:opencsv:4.0');
+
+    implementation('com.google.code.gson:gson:2.8.2');
+    // this is for mysql java connector
+    implementation(group: 'mysql', name: 'mysql-connector-java', version: '5.1.49');
+    testImplementation 'junit:junit:4.12'
 }
 
 test {
