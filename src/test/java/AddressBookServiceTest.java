@@ -30,4 +30,14 @@ public class AddressBookServiceTest {
         addressBookService.editAddressBook(addressBook,"vinay",2,updateValue);
         Assertions.assertEquals(updateValue,addressBookService.getContactfromAddressBook(addressBook,"vinay").getLastName());
     }
+
+    @Test
+    public void givenAddressbook_whenCorrect_CAnBeDelete(){
+        AddressBookService addressBookService=new AddressBookService();
+        Contact contact=new Contact((int)(Math.random() * 100), "vinay", "hiremath", "street 2", 9874512420L, "vvj@gmail.com", "badami", "karnataka", 587201);
+        AddressBook addressBook=new AddressBook((int) (Math.random()*100),"AddressBook1");
+        addressBookService.addContactToAddressBook(addressBook,contact);
+        addressBookService.deleteContact(addressBook,"vinay");
+        Assertions.assertFalse(addressBook.getContactsList().contains(contact));
+    }
 }
