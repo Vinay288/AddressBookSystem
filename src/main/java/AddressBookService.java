@@ -157,6 +157,8 @@ public class AddressBookService {
                             return true;
             case CSV_IO:AddressBookIOService.getIoInstance().writeToCSVFile(getAddressBook(addressBookName),fileName);
                         return true;
+            case JSON_IO:AddressBookIOService.getIoInstance().writeToJsonFile(getAddressBook(addressBookName),fileName);
+                        return true;
             default:break;
         }
         return false;
