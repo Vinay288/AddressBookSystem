@@ -155,6 +155,8 @@ public class AddressBookService {
         switch (ioService){
             case FILE_IO: AddressBookIOService.getIoInstance().writeToFile(getAddressBook(addressBookName),fileName);
                             return true;
+            case CSV_IO:AddressBookIOService.getIoInstance().writeToCSVFile(getAddressBook(addressBookName),fileName);
+                        return true;
             default:break;
         }
         return false;
@@ -162,6 +164,8 @@ public class AddressBookService {
     public boolean readService(String fileName,IOService ioService){
         switch (ioService){
             case FILE_IO: AddressBookIOService.getIoInstance().readFromFile(fileName);
+                return true;
+            case CSV_IO:AddressBookIOService.getIoInstance().readFromCSVFile(fileName);
                 return true;
             default:break;
         }
