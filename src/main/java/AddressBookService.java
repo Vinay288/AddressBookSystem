@@ -1,8 +1,16 @@
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
 public class AddressBookService {
+    HashSet<String> addressBookName;
+    List<AddressBook> addressBooks;
     Contact contact;
+    AddressBookService(){
+        addressBookName=new HashSet<>();
+        addressBooks=new ArrayList<>();
+    }
 public Contact getContact(){
     return contact.getContact();
 }
@@ -52,5 +60,8 @@ public void editAddressBook(AddressBook addressBook,String contactName,int colum
 public void deleteContact(AddressBook addressBook,String contactName){
     Contact contact=getContactfromAddressBook(addressBook,contactName);
     addressBook.getContactsList().remove(contact);
+}
+public void addAdderessBook(AddressBook addressBook){
+    addressBooks.add(addressBook);
 }
 }
