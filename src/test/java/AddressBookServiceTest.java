@@ -1,6 +1,8 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 public class AddressBookServiceTest {
 
     @Test
@@ -71,5 +73,20 @@ public class AddressBookServiceTest {
         addressBookService.addAdderessBook(addressBook1);
         boolean result = addressBookService.addAdderessBook(addressBook2);
         Assertions.assertFalse(result);
+    }
+
+    @Test
+    public void searchContactWithByCityOrStateName(){
+        AddressBookService addressBookService = new AddressBookService();
+        Contact contact1 = new Contact((int) (Math.random() * 100), "vinay", "hiremath", "street 2", 9874512420L, "vvj@gmail.com", "badami", "karnataka", 587201);
+        Contact contact2 = new Contact((int) (Math.random() * 100), "vishal", "hiremath", "street 2", 9874512420L, "vvj@gmail.com", "bagalkot", "karnataka", 587201);
+        AddressBook addressBook = new AddressBook((int) (Math.random() * 100), "AddressBook1");
+        AddressBook addressBook2 = new AddressBook((int) (Math.random() * 100), "AddressBook2");
+        addressBookService.addAdderessBook(addressBook);
+        addressBookService.addAdderessBook(addressBook2);
+        addressBookService.addContactToAddressBook(addressBook, contact1);
+        addressBookService.addContactToAddressBook(addressBook2, contact2);
+        List<Contact> contactList=addressBookService.searchContact("badami","karnataka");
+        Assertions.assertEquals(2,contactList.size());
     }
 }
