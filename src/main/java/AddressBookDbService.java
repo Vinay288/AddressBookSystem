@@ -1,7 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,5 +64,62 @@ public class AddressBookDbService {
         return contactsList;
 
     }
+
+    public Contact writeAddressBookDB(Contact contact, String addressBookName) {
+        Contact updatedContact;
+        String insertQueryString = "INSERT INTO contact_details values(" + contact.getId() + ",\""
+                + contact.getFirstName() + "\",\"" + contact.getLastName() + "\",\"" + contact.getAddress() + "\",\""
+                + contact.getEmail() + "\"," + contact.getPlace().getId() + ",\"" + contact.getPhoneNumber()
+                + "\",\""+"2020-09-19"+"\")";
+        String insertPlaceQueryString = "INSERT into place values(" + contact.getPlace().getId() + ",\""
+                + contact.getPlace().getCity() + "\",\"" + contact.getPlace().getZip() + "\",\"" + contact.getPlace().getState() + "\")";
+        String insertIntermediateTableString = "insert into addressbook_contact values((select address_book_id from address_book where address_book_name=\""
+                + addressBookName + "\")," + contact.getId() + ")";
+        Connection connection;
+        try {
+            connection = this.getConnection();
+            connection.setAutoCommit(false);
+        } catch (Exception e) {
+            throw new DBException(e.getMessage());
+        }
+
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate(insertPlaceQueryString);
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                throw new DBException(e.getMessage());
+            }
+            throw new DBException(e.getMessage());
+        }
+
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate(insertQueryString);
+        } catch (Exception e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e1) {
+                throw new DBException(e.getMessage());
+            }
+            throw new DBException(e.getMessage());
+        }
+
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate(insertIntermediateTableString);
+            connection.commit();
+            updatedContact = contact;
+        } catch (Exception e) {
+            throw new DBException(e.getMessage());
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new DBException(e.getMessage());
+            }
+        }
+        return updatedContact;
+    }
 }
+
 
