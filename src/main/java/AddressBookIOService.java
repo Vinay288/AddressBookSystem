@@ -2,12 +2,14 @@ import com.google.gson.Gson;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 
+import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AddressBookIOService {
@@ -96,5 +98,17 @@ public class AddressBookIOService {
             throw new FileIOException(e.getMessage());
         }
 
+    }
+    public void readJsonFile(String fileName){
+        try {
+            Gson gson = new Gson();
+            BufferedReader br = new BufferedReader(new FileReader(fileName.concat(".json")));
+            Contact[] contactsFile = gson.fromJson(br, Contact[].class);
+            List<Contact> addressbook = Arrays.asList(contactsFile);
+            System.out.println(addressbook);
+        }
+        catch (Exception e) {
+            throw new FileIOException(e.getMessage());
+        }
     }
 }
