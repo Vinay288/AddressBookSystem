@@ -1,10 +1,14 @@
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AddressBookDbService {
     private static AddressBookDbService addressBookDbService;
     private java.sql.PreparedStatement readContactPreparedStatement;
+    private PreparedStatement contactAddedGivenRangeStatement;
+    private PreparedStatement contactsInGivenCityOrStateStatement;
+
 
     private AddressBookDbService() {
 
@@ -120,6 +124,29 @@ public class AddressBookDbService {
         }
         return updatedContact;
     }
+    private void preparedStatementToretriveContactsInRange() {
+        try {
+            Connection connection = this.getConnection();
+            String query = "select * from contact_details where date_added between ? and ?";
+            contactAddedGivenRangeStatement = connection.prepareStatement(query);
+        } catch (Exception e) {
+            throw new DBException(e.getMessage());
+        }
+    }
+    public List<Contact> readConatctsAddedInRange(Date startDate, Date endDate) {
+        if (contactAddedGivenRangeStatement == null) {
+            this.preparedStatementToretriveContactsInRange();
+        }
+        try {
+            contactAddedGivenRangeStatement.setDate(1, (java.sql.Date) startDate);
+            contactAddedGivenRangeStatement.setDate(2, (java.sql.Date) endDate);
+            ResultSet resultSet = contactAddedGivenRangeStatement.executeQuery();
+            return this.getContactList(resultSet);
+        } catch (Exception e) {
+            throw new DBException(e.getMessage());
+        }
+    }
+
 }
 
 
