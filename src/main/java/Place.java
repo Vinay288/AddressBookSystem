@@ -12,6 +12,16 @@ public class Place {
         return city;
     }
 
+    @Override
+    public String toString() {
+        return "Place{" +
+                "id=" + id +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zip=" + zip +
+                '}';
+    }
+
     public void setCity(String city) {
         this.city = city;
     }
