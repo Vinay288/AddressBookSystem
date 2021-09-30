@@ -163,6 +163,7 @@ public class AddressBookService {
         }
         return false;
     }
+    List<Contact> contactsListFromDB;
     public boolean readService(String fileName,IOService ioService){
         switch (ioService){
             case FILE_IO: AddressBookIOService.getIoInstance().readFromFile(fileName);
@@ -170,6 +171,9 @@ public class AddressBookService {
             case CSV_IO:AddressBookIOService.getIoInstance().readFromCSVFile(fileName);
                 return true;
             case JSON_IO: AddressBookIOService.getIoInstance().readJsonFile(fileName);
+                return true;
+            case DB_IO:contactsListFromDB=AddressBookDbService.getIoInstance().readContacts(fileName);
+                return true;
             default:break;
         }
         return false;
