@@ -49,4 +49,8 @@ public void editAddressBook(AddressBook addressBook,String contactName,int colum
             this.editContact(contact, columnIndex,value);
         }
 }
+public void deleteContact(AddressBook addressBook,String contactName){
+    Contact contact=getContactfromAddressBook(addressBook,contactName);
+    addressBook.getContactsList().remove(contact);
+}
 }
