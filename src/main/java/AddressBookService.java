@@ -144,5 +144,20 @@ public class AddressBookService {
                 break;
         }
 
+
+        }
+        public AddressBook getAddressBook(String addressBookName){
+        for(AddressBook addressBook:addressBooks)
+            if (addressBook.getName().equals(addressBookName)) return addressBook;
+            return null;
+        }
+    public boolean writeService(String addressBookName, IOService ioService, String fileName) {
+        switch (ioService){
+            case FILE_IO: AddressBookIOService.getIoInstance().writeToFile(getAddressBook(addressBookName),fileName);
+                            return true;
+            default:break;
+        }
+        return false;
     }
-}
+    }
+
