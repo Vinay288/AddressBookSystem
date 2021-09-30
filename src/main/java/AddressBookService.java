@@ -159,5 +159,13 @@ public class AddressBookService {
         }
         return false;
     }
+    public boolean readService(String fileName,IOService ioService){
+        switch (ioService){
+            case FILE_IO: AddressBookIOService.getIoInstance().readFromFile(fileName);
+                return true;
+            default:break;
+        }
+        return false;
+    }
     }
 
