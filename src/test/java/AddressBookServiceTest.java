@@ -50,4 +50,14 @@ public class AddressBookServiceTest {
         addressBookService.addContactToAddressBook(addressBook,contact2);
         Assertions.assertEquals(2,addressBook.getContactsList().size());
     }
+    @Test
+    public void muktipleAddressbooksCanBeAdded(){
+        AddressBookService addressBookService=new AddressBookService();
+        AddressBook addressBook1=new AddressBook((int) (Math.random()*100),"AddressBook1");
+        AddressBook addressBook2=new AddressBook((int) (Math.random()*100),"AddressBook2");
+        addressBookService.addAdderessBook(addressBook1);
+        addressBookService.addAdderessBook(addressBook2);
+        Assertions.assertEquals(2,addressBookService.addressBooks.size());
+
+    }
 }
