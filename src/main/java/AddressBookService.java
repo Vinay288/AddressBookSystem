@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class AddressBookService {
     HashSet<String> addressBookName;
@@ -103,5 +104,45 @@ public class AddressBookService {
         List<Contact> contactList = new ArrayList<>();
         addressBooks.forEach(addressBook -> addressBook.getContactsList().stream().filter(contact -> (contact.getPlace().getCity().equals(cityName) || contact.getPlace().getCity().equals(stateName))).forEach(contactList::add));
         return contactList;
+    }
+
+    public void sortContacts(HashMap<String, Contact> addressBook, int sortKey) {
+        ArrayList<Contact> personList = new ArrayList<>(addressBook.values());
+        if (sortKey == 0) {
+            List<Contact> sortedPersonList = personList.stream()
+                    .sorted(Comparator.comparing(Contact::getFirstName)).collect(Collectors.toList());
+            System.out.println("contacts after sorting ");
+            System.out.println(sortedPersonList);
+        }
+        switch (sortKey) {
+            case 0:
+                List<Contact> sortedPersonList = personList.stream()
+                        .sorted(Comparator.comparing(Contact::getFirstName)).collect(Collectors.toList());
+                System.out.println("contacts after sorting ");
+                System.out.println(sortedPersonList);
+                break;
+            case 1:
+                List<Contact> sortedPersonByCityList = personList.stream()
+                        .sorted(Comparator.comparing(s -> s.getPlace().getCity())).collect(Collectors.toList());
+                System.out.println("contacts after sorting ");
+                System.out.println(sortedPersonByCityList);
+                break;
+            case 2:
+                List<Contact> sortedPersonByStateList = personList.stream()
+                        .sorted(Comparator.comparing(s -> s.getPlace().getState())).collect(Collectors.toList());
+                System.out.println("contacts after sorting ");
+                System.out.println(sortedPersonByStateList);
+                break;
+            case 3:
+                List<Contact> sortedPersonByZipList = personList.stream()
+                        .sorted(Comparator.comparing(s -> s.getPlace().getZip()))
+                        .collect(Collectors.toList());
+                System.out.println("contacts after sorting ");
+                System.out.println(sortedPersonByZipList);
+                break;
+            default:
+                break;
+        }
+
     }
 }
