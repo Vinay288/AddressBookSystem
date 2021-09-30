@@ -70,4 +70,17 @@ public Contact getContact(){
         this.email=email;
         place=new Place((int) (Math.random()*100),city,state,zip);
     }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", address='" + address + '\'' +
+                ", phoneNumber=" + phoneNumber +
+                ", email='" + email + '\'' +
+                ", place=" + place +
+                '}';
+    }
 }
