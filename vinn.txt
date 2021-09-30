@@ -1,0 +1,2 @@
+Contact{id=32, firstName='vinay', lastName='hiremath', address='street 2', phoneNumber=9874512420, email='vvj@gmail.com', place=Place{id=44, city='badami', state='karnataka', zip=587201}}
+Contact{id=26, firstName='vishal', lastName='hiremath', address='street 2', phoneNumber=9874512420, email='vvj@gmail.com', place=Place{id=65, city='bagalkot', state='karnataka', zip=587201}}
