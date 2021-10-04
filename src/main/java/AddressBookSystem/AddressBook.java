@@ -1,3 +1,5 @@
+package AddressBookSystem;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,13 +37,14 @@ public class AddressBook {
         this.contactsList = contactsList;
     }
 
-    AddressBook(Integer id, String name){
-        this.id=id;
-        this.name=name;
-        contactsList=new ArrayList<>();
-        addressBookTypeList=new ArrayList<>();
+    AddressBook(String name) {
+        this.id = (int) (Math.random() * 100);
+        this.name = name;
+        contactsList = new ArrayList<>();
+        addressBookTypeList = new ArrayList<>();
     }
-    public void addContact(Contact contact){
+
+    public void addContact(Contact contact) {
         contactsList.add(contact);
     }
 }

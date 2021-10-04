@@ -1,11 +1,14 @@
+package AddressBookSystem;
+
 import java.util.List;
 
 public class AddressBookType {
     private final Integer id;
     private String name;
-    AddressBookType(Integer id, String name){
-        this.id=id;
-        this.name=name;
+
+    AddressBookType(String name) {
+        this.id = (int) (Math.random() * 100);
+        this.name = name;
     }
 
     public Integer getId() {

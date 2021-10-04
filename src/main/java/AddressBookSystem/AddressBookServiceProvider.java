@@ -1,22 +1,30 @@
+package AddressBookSystem;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class AddressBookService {
+public class AddressBookServiceProvider extends Thread implements AddressBookServiceProviderIF {
     HashSet<String> addressBookName;
     List<AddressBook> addressBooks;
+    List<Contact> contactList;
     HashMap<String, List<Contact>> cityContactsList;
     HashMap<String, List<Contact>> stateContactsList;
-    Contact contact,updateContact;
+    Contact contact, updateContact;
 
-    AddressBookService() {
+    public AddressBookServiceProvider() {
         addressBookName = new HashSet<>();
         addressBooks = new ArrayList<>();
         cityContactsList = new HashMap<>();
         stateContactsList = new HashMap<>();
+        contactList = new ArrayList<>();
     }
 
     public Contact getContact() {
         return contact.getContact();
+    }
+
+    public void addContact(Contact contact) {
+        contactList.add(contact);
     }
 
     public Contact getContactfromAddressBook(AddressBook addressBook, String firstName) {
@@ -56,7 +64,7 @@ public class AddressBookService {
                 contact.setLastName(value);
                 break;
             case 3:
-                contact.setAddress(value);
+                contact.setContactAddress(value);
                 break;
             case 4:
                 contact.setPhoneNumber(Long.valueOf(value));
@@ -145,55 +153,71 @@ public class AddressBookService {
         }
 
 
-        }
-        public AddressBook getAddressBook(String addressBookName){
-        for(AddressBook addressBook:addressBooks)
+    }
+
+    public AddressBook getAddressBook(String addressBookName) {
+        for (AddressBook addressBook : addressBooks)
             if (addressBook.getName().equals(addressBookName)) return addressBook;
-            return null;
-        }
-    public boolean writeService(String addressBookName, IOService ioService, String fileName) {
-        switch (ioService){
-            case FILE_IO: AddressBookIOService.getIoInstance().writeToFile(getAddressBook(addressBookName),fileName);
-                            return true;
-            case CSV_IO:AddressBookIOService.getIoInstance().writeToCSVFile(getAddressBook(addressBookName),fileName);
-                        return true;
-            case JSON_IO:AddressBookIOService.getIoInstance().writeToJsonFile(getAddressBook(addressBookName),fileName);
-                        return true;
-            case DB_IO: updateContact=AddressBookDbService.getIoInstance().writeAddressBookDB(this.getContact(), addressBookName);
-                        return true;
-            default:break;
+        return null;
+    }
+
+    public boolean writeService(String addressBookName, IOServiceEnum ioServiceEnum, String fileName) {
+        switch (ioServiceEnum) {
+            case FILE_IO:
+                AddressBookFileIOServiceProvider.getIoInstance().writeToFile(getAddressBook(addressBookName), fileName);
+                return true;
+            case CSV_IO:
+                AddressBookCSVServiceProvider.getIoInstance().writeToCSVFile(getAddressBook(addressBookName), fileName);
+                return true;
+            case JSON_IO:
+                AddressBookJSONServiceProvider.getIoInstance().writeToJsonFile(getAddressBook(addressBookName), fileName);
+                return true;
+            case DB_IO:
+                updateContact = AddressBookDataBaseServiceProvider.getIoInstance().writeAddressBookDB(this.getContact(), addressBookName);
+                return true;
+            default:
+                break;
         }
         return false;
     }
+
     List<Contact> contactsListFromDB;
-    public boolean readService(String fileName,IOService ioService){
-        switch (ioService){
-            case FILE_IO: AddressBookIOService.getIoInstance().readFromFile(fileName);
+
+    public boolean readService(String fileName, IOServiceEnum ioServiceEnum) {
+        switch (ioServiceEnum) {
+            case FILE_IO:
+                AddressBookFileIOServiceProvider.getIoInstance().readFromFile(fileName);
                 return true;
-            case CSV_IO:AddressBookIOService.getIoInstance().readFromCSVFile(fileName);
+            case CSV_IO:
+                AddressBookCSVServiceProvider.getIoInstance().readFromCSVFile(fileName);
                 return true;
-            case JSON_IO: AddressBookIOService.getIoInstance().readJsonFile(fileName);
+            case JSON_IO:
+                AddressBookJSONServiceProvider.getIoInstance().readJsonFile(fileName);
                 return true;
-            case DB_IO:contactsListFromDB=AddressBookDbService.getIoInstance().readContacts(fileName);
+            case DB_IO:
+                contactsListFromDB = AddressBookDataBaseServiceProvider.getIoInstance().readContacts(fileName);
                 return true;
-            default:break;
+            default:
+                break;
         }
         return false;
     }
 
     public boolean compareContactSync(String addressBokkName) {
-        readService(addressBokkName,IOService.DB_IO);
+        readService(addressBokkName, IOServiceEnum.DB_IO);
         for (Contact contact : contactsListFromDB) {
             if (contact.toString().equals(updateContact.toString()))
                 return true;
         }
         return false;
     }
+
     public List<Contact> readConatctsAddedInRange(Date startDate, Date endDate) {
-        return AddressBookDbService.getIoInstance().readConatctsAddedInRange(startDate, endDate);
+        return AddressBookDataBaseServiceProvider.getIoInstance().readConatctsAddedInRange(startDate, endDate);
     }
+
     public List<Contact> readConatctsAddedInGivenCityOrState(String city, String state) {
-        return AddressBookDbService.getIoInstance().readContactsInGivenCityOrState(city, state);
+        return AddressBookDataBaseServiceProvider.getIoInstance().readContactsInGivenCityOrState(city, state);
     }
 }
 

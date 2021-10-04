@@ -1,18 +1,22 @@
+package AddressBookSystem;
+
 public class Contact {
     private final Integer id;
     private String firstName;
     private String lastName;
-    private String address;
+    private String contactAddress;
     private Long phoneNumber;
     private String email;
-    private Place place;
+    private Address address;
 
     public Integer getId() {
         return id;
     }
-public Contact getContact(){
+
+    public Contact getContact() {
         return this;
-}
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -29,12 +33,12 @@ public Contact getContact(){
         this.lastName = lastName;
     }
 
-    public String getAddress() {
-        return address;
+    public String getContactAddress() {
+        return contactAddress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setContactAddress(String contactAddress) {
+        this.contactAddress = contactAddress;
     }
 
     public Long getPhoneNumber() {
@@ -53,22 +57,22 @@ public Contact getContact(){
         this.email = email;
     }
 
-    public Place getPlace() {
-        return place;
+    public Address getPlace() {
+        return address;
     }
 
-    public void setPlace(Place place) {
-        this.place = place;
+    public void setPlace(Address address) {
+        this.address = address;
     }
 
-    Contact(Integer id, String firstName, String lastName, String address, Long phoneNumber, String email, String city, String state, Integer zip){
-        this.id=id;
-        this.firstName=firstName;
-        this.lastName=lastName;
-        this.address=address;
-        this.phoneNumber=phoneNumber;
-        this.email=email;
-        place=new Place((int) (Math.random()*100),city,state,zip);
+    public Contact(String firstName, String lastName, String address, Long phoneNumber, String email, String city, String state, Integer zip) {
+        this.id = (int) (Math.random() * 100);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.contactAddress = address;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.address = new Address(city, state, zip);
     }
 
     @Override
@@ -77,10 +81,10 @@ public Contact getContact(){
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", address='" + address + '\'' +
+                ", address='" + contactAddress + '\'' +
                 ", phoneNumber=" + phoneNumber +
                 ", email='" + email + '\'' +
-                ", place=" + place +
+                ", place=" + contactAddress +
                 '}';
     }
 }
