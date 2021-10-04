@@ -1,4 +1,5 @@
-public class Place {
+package AddressBookSystem;
+public class Address {
     private final Integer id;
     private String city;
     private String state;
@@ -42,8 +43,8 @@ public class Place {
         this.zip = zip;
     }
 
-    Place(Integer id, String city, String state, Integer zip) {
-        this.id = id;
+    Address(String city, String state, Integer zip) {
+        this.id = (int) (Math.random() * 100);
         this.city = city;
         this.state = state;
         this.zip = zip;
